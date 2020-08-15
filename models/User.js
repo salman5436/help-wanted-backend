@@ -22,8 +22,8 @@ const UserSchema = new Schema({
       type: String,
     },
     isTeacher: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: 'false'
     },
     bio: {
       type: String,
