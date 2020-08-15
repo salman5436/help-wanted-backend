@@ -21,13 +21,17 @@ const UserSchema = new Schema({
     avatar: {
       type: String,
     },
-    date: {
-      type: Date,
-      default: Date.now()
-    },
-    isFriend: {
+    isTeacher: {
       type: Boolean,
       default: false
+    },
+    bio: {
+      type: String,
+      max: 500,
+    },
+    instrumentsPlayed: {
+      type: String,
+      max: 100
     }
   });
 
