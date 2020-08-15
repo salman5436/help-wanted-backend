@@ -10,6 +10,11 @@ const passport = require('passport');
 // Load User Model
 const User = require('../models/User');
 
+router.get('/test', (req, res) => {
+  res.json('route hit')
+  console.log('route hit')
+})
+
 // STRETCH: SEARCH FOR USERS VIA SEARCH BAR
 router.get('/search', (req, res) => {
     User.findOne({name: req.body.name})
@@ -60,10 +65,14 @@ router.post('/register', (req, res) => {
           password: req.body.password,
         });
 
+        //console.log(req.body.name)
+
         // Salt and Hash password with bcryptjs, then save new user
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) throw err;
+        bcrypt.genSalt(10, function (err, salt) {
+          bcrypt.hash(newUser.password, salt, function (err, hash) {
+            if(err)  {
+              throw err;
+            }
             newUser.password = hash;
             newUser.save()
               .then(user => res.json(user))
@@ -79,7 +88,6 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   // Find User by email
   User.findOne({ email })
     .then(user => {
