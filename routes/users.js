@@ -10,10 +10,10 @@ const passport = require('passport');
 // Load User Model
 const User = require('../models/User');
 
-router.get('/test', (req, res) => {
-  res.json('route hit')
-  console.log('route hit')
-})
+// router.get('/test', (req, res) => {
+//   res.json('route hit')
+//   console.log('route hit')
+// })
 
 // STRETCH: SEARCH FOR USERS VIA SEARCH BAR
 router.get('/search', (req, res) => {
@@ -63,6 +63,9 @@ router.post('/register', (req, res) => {
           email: req.body.email,
           avatar,
           password: req.body.password,
+          isTeacher: req.body.isTeacher,
+          bio: req.body.bio,
+          instrumentsPlayed: req.body.instrumentsPlayed
         });
 
         //console.log(req.body.name)
@@ -115,6 +118,20 @@ router.post('/login', (req, res) => {
         })
     })
 });
+
+router.put ('/:id', (req, res) => {
+  User.findOneAndUpdate({ _id: req.params.id },
+      req.body,
+      {new: true}
+      )
+      .then(updatedUser => {
+          res.send(updatedUser)
+      })
+      .catch(error => {
+          res.send({message: 'Server error'})
+          console.error(error)
+  })
+})
 
 
 module.exports = router;
