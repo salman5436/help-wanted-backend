@@ -63,6 +63,9 @@ router.post('/register', (req, res) => {
           email: req.body.email,
           avatar,
           password: req.body.password,
+          isTeacher: req.body.isTeacher,
+          bio: req.body.bio,
+          instrumentsPlayed: req.body.instrumentsPlayed
         });
 
         //console.log(req.body.name)
@@ -115,6 +118,20 @@ router.post('/login', (req, res) => {
         })
     })
 });
+
+router.put ('/:id', (req, res) => {
+  User.findOneAndUpdate({ _id: req.params.id },
+      req.body,
+      {new: true}
+      )
+      .then(updatedUser => {
+          res.send(updatedUser)
+      })
+      .catch(error => {
+          res.send({message: 'Server error'})
+          console.error(error)
+  })
+})
 
 
 module.exports = router;
