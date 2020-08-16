@@ -17,7 +17,7 @@ router.get('/test', (req, res) => {
 
 // STRETCH: SEARCH FOR USERS VIA SEARCH BAR
 router.get('/search', (req, res) => {
-    User.findOne({name: req.body.name})
+    User.find({})
     .then(searchedUser => {
         if (!searchedUser) {
             res.send('no user by that name, please try again')
@@ -73,9 +73,8 @@ router.post('/register', (req, res) => {
         // Salt and Hash password with bcryptjs, then save new user
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(newUser.password, salt, function (err, hash) {
-            if(err)  {
-              throw err;
-            }
+            if(err) throw err;
+            
             newUser.password = hash;
             newUser.save()
               .then(user => res.json(user))
