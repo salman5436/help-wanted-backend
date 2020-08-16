@@ -30,6 +30,21 @@ router.get('/search', (req, res) => {
     })
 })
 
+router.get('/teachers', (req, res) => {
+  User.find({})
+    .then(teachers => {
+      if (User.isTeacher == "True") {
+        res.send(teachers)
+      }
+      else {
+        res.send('No Teachers at this time.')
+      }
+    }) .catch(error => {
+      res.send({message: 'Server error, please try again'})
+      console.log(error)
+    })
+})
+
 // GET api/users/current (Private)
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
 
